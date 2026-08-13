@@ -1,0 +1,122 @@
+{
+    "name": "laranail/pdf",
+    "description": "PDF rendering for Laravel behind a capability-checked driver seam: Gotenberg for HTML, URL, Office and merging, Dompdf for HTML alone, and a lazy document that streams rather than returning a path.",
+    "keywords": [
+        "laravel",
+        "laranail",
+        "pdf",
+        "gotenberg",
+        "dompdf",
+        "html-to-pdf",
+        "rendering",
+        "streaming"
+    ],
+    "homepage": "https://opensource.simtabi.com/products/laranail/pdf",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simtabi LLC",
+            "email": "opensource@simtabi.com",
+            "homepage": "https://opensource.simtabi.com",
+            "role": "Organization"
+        },
+        {
+            "name": "Imani Manyara",
+            "email": "imani@simtabi.com",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/laranail/pdf/issues",
+        "source": "https://github.com/laranail/pdf",
+        "docs": "https://opensource.simtabi.com/documentation/laranail/pdf/"
+    },
+    "require": {
+        "php": "^8.4.1 || ^8.5",
+        "ext-json": "*",
+        "illuminate/console": "^13.0",
+        "illuminate/contracts": "^13.0",
+        "illuminate/filesystem": "^13.0",
+        "illuminate/http": "^13.0",
+        "illuminate/support": "^13.0",
+        "laranail/console": "^0.1",
+        "laranail/package-tools": "^0.1",
+        "psr/http-message": "^1.1 || ^2.0",
+        "psr/log": "^3.0"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/laranail/console"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/laranail/package-tools"
+        }
+    ],
+    "require-dev": {
+        "dompdf/dompdf": "^3.0",
+        "gotenberg/gotenberg-php": "^2.7",
+        "guzzlehttp/guzzle": "^7.9",
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.18",
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^11.0",
+        "pestphp/pest": "^4.0",
+        "phpstan/phpstan": "^2.0",
+        "rector/rector": "^2.0",
+        "roave/security-advisories": "dev-latest"
+    },
+    "suggest": {
+        "gotenberg/gotenberg-php": "The Gotenberg driver — HTML, URL, Office and merging (^2.7). Needs a running Gotenberg instance.",
+        "dompdf/dompdf": "The Dompdf driver — in-process HTML rendering with no external service (^3.0).",
+        "guzzlehttp/guzzle": "The PSR-18 client the Gotenberg driver sends through (^7.9)."
+    },
+    "autoload": {
+        "psr-4": {
+            "Simtabi\\Laranail\\Pdf\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Simtabi\\Laranail\\Pdf\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest --colors=always",
+        "test-coverage": "@test --coverage",
+        "test-dirty": "@test --dirty --compact",
+        "lint": [
+            "@pint",
+            "@phpstan",
+            "@rector"
+        ],
+        "pint": "vendor/bin/pint --test",
+        "pint-fix": "vendor/bin/pint",
+        "phpstan": "vendor/bin/phpstan analyse --no-progress",
+        "rector": "vendor/bin/rector process --dry-run",
+        "rector-fix": "vendor/bin/rector process",
+        "audit": "@composer audit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Simtabi\\Laranail\\Pdf\\Providers\\PdfServiceProvider"
+            ],
+            "aliases": {
+                "Pdf": "Simtabi\\Laranail\\Pdf\\Facades\\Pdf"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
