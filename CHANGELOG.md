@@ -5,6 +5,18 @@ All notable changes to `laranail/pdf` are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`PdfDocument::saveTo()` reported success on a write that never happened.** A
+  failed `fopen()` was swallowed and the path returned anyway, so an unwritable
+  directory — the ordinary case — looked identical to a successful save and the
+  caller went on to reference a file that did not exist. It now throws
+  `RenderFailed`, and a short write (a full disk stopping `fwrite()` early) is
+  treated the same way: a truncated PDF claiming to be whole is worse than an
+  exception. The handle is closed in a `finally` either way.
+
 ## [0.1.0] - 2026-08-13
 
 Initial release.

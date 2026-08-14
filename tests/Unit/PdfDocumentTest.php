@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Facades\Storage;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\StreamInterface;
+use Simtabi\Laranail\Pdf\Exceptions\PdfException;
 use Simtabi\Laranail\Pdf\Tests\TestCase;
 use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -126,6 +127,34 @@ final class PdfDocumentTest extends TestCase
         $document->contents();
 
         self::assertSame(2, $this->renders, 'A read after store() should re-render, not return nothing.');
+    }
+
+    #[Test]
+    public function saving_to_an_unwritable_path_throws_rather_than_reporting_success(): void
+    {
+        // The regression this guards: saveTo() swallowed a failed fopen() and
+        // returned the path anyway, so an unwritable directory — the common
+        // case — looked like a successful write and the caller went on to
+        // reference a file that was never created.
+        $document = $this->document();
+
+        $this->expectException(PdfException::class);
+
+        $document->saveTo('/no/such/directory/report.pdf');
+    }
+
+    #[Test]
+    public function a_failed_save_leaves_no_file_behind(): void
+    {
+        $document = $this->document();
+
+        try {
+            $document->saveTo('/no/such/directory/report.pdf');
+        } catch (PdfException) {
+            // expected
+        }
+
+        self::assertFileDoesNotExist('/no/such/directory/report.pdf');
     }
 
     #[Test]

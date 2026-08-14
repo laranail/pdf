@@ -8,6 +8,8 @@ use Closure;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Facades\Storage;
 use Psr\Http\Message\StreamInterface;
+use RuntimeException;
+use Simtabi\Laranail\Pdf\Exceptions\RenderFailed;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -124,13 +126,27 @@ final class PdfDocument implements Responsable
 
     /**
      * Write to a local absolute path.
+     *
+     * Throws rather than returning on failure. It previously swallowed a failed
+     * `fopen()` and returned the path anyway, so an unwritable directory — the
+     * common case — reported success and the caller went on to reference a file
+     * that was never created. A short write is treated the same way: a full
+     * disk stops `fwrite()` early, and a truncated PDF that claims to be whole
+     * is worse than an exception.
+     *
+     * @throws RenderFailed when the file cannot be opened or fully written
      */
     public function saveTo(string $absolutePath): string
     {
-        $handle = fopen($absolutePath, 'wb');
+        $handle = @fopen($absolutePath, 'wb');
 
         if ($handle === false) {
-            return $absolutePath;
+            throw RenderFailed::from(
+                $this->driver,
+                'save',
+                new RuntimeException("Could not open [{$absolutePath}] for writing."),
+                ['path' => $absolutePath],
+            );
         }
 
         $stream = $this->stream();
@@ -139,11 +155,23 @@ final class PdfDocument implements Responsable
             $stream->rewind();
         }
 
-        while (! $stream->eof()) {
-            fwrite($handle, $stream->read(8192));
-        }
+        try {
+            while (! $stream->eof()) {
+                $chunk = $stream->read(8192);
+                $written = fwrite($handle, $chunk);
 
-        fclose($handle);
+                if ($written === false || $written < strlen($chunk)) {
+                    throw RenderFailed::from(
+                        $this->driver,
+                        'save',
+                        new RuntimeException("Short write to [{$absolutePath}] — the disk may be full."),
+                        ['path' => $absolutePath],
+                    );
+                }
+            }
+        } finally {
+            fclose($handle);
+        }
 
         return $absolutePath;
     }
