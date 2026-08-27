@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use PHPUnit\Framework\Assert;
+use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
 
 /**
  * The dependency rule, enforced rather than documented.
@@ -58,7 +59,7 @@ arch('value objects stay free of framework services')
 arch('only PdfDocument may reach the filesystem facade')
     ->expect('Simtabi\Laranail\Pdf\ValueObjects')
     ->not->toUse(Storage::class)
-    ->ignoring('Simtabi\Laranail\Pdf\ValueObjects\PdfDocument');
+    ->ignoring(PdfDocument::class);
 
 /**
  * `env()` outside a config file returns null once `config:cache` has run, so a driver reading a
