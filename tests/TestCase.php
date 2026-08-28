@@ -6,10 +6,10 @@ namespace Simtabi\Laranail\Pdf\Tests;
 
 use Override;
 use Simtabi\Laranail\Pdf\Facades\Pdf;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Simtabi\Laranail\Pdf\Providers\PdfServiceProvider;
+use Simtabi\Laranail\Package\Tools\Testing\IsolatedTestCase;
 
-abstract class TestCase extends Orchestra
+abstract class TestCase extends IsolatedTestCase
 {
     /** @return array<int, class-string> */
     #[Override]
