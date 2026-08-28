@@ -118,6 +118,18 @@ final readonly class UrlGuard
     }
 
     /**
+     * @return list<string>
+     */
+    private static function stringList(mixed $value): array
+    {
+        if (! is_array($value)) {
+            return [];
+        }
+
+        return array_values(array_filter($value, is_string(...)));
+    }
+
+    /**
      * Exact match, or a `.suffix` match for a leading-dot entry.
      *
      * `.example.com` allows `api.example.com` but **not** `example.com` itself,
@@ -186,17 +198,5 @@ final readonly class UrlGuard
         return $long !== false
             && $long >= ip2long('100.64.0.0')
             && $long <= ip2long('100.127.255.255');
-    }
-
-    /**
-     * @return list<string>
-     */
-    private static function stringList(mixed $value): array
-    {
-        if (! is_array($value)) {
-            return [];
-        }
-
-        return array_values(array_filter($value, is_string(...)));
     }
 }

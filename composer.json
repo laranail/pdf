@@ -68,8 +68,8 @@
         "roave/security-advisories": "dev-latest"
     },
     "suggest": {
-        "gotenberg/gotenberg-php": "The Gotenberg driver — HTML, URL, Office and merging (^2.7). Needs a running Gotenberg instance.",
-        "dompdf/dompdf": "The Dompdf driver — in-process HTML rendering with no external service (^3.0).",
+        "gotenberg/gotenberg-php": "The Gotenberg driver \u2014 HTML, URL, Office and merging (^2.7). Needs a running Gotenberg instance.",
+        "dompdf/dompdf": "The Dompdf driver \u2014 in-process HTML rendering with no external service (^3.0).",
         "guzzlehttp/guzzle": "The PSR-18 client the Gotenberg driver sends through (^7.9)."
     },
     "autoload": {
@@ -91,12 +91,13 @@
             "@phpstan",
             "@rector"
         ],
-        "pint": "vendor/bin/pint --test",
-        "pint-fix": "vendor/bin/pint",
+        "pint": "vendor/bin/pint --test --config vendor/laranail/package-tools/pint.json",
+        "pint-fix": "vendor/bin/pint --parallel --config vendor/laranail/package-tools/pint.json",
         "phpstan": "vendor/bin/phpstan analyse --no-progress",
         "rector": "vendor/bin/rector process --dry-run",
         "rector-fix": "vendor/bin/rector process",
-        "audit": "@composer audit"
+        "audit": "@composer audit",
+        "format": "@pint-fix"
     },
     "extra": {
         "branch-alias": {

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Pdf\Tests\Unit;
 
 use GuzzleHttp\Psr7\Utils;
-use Illuminate\Support\Facades\Storage;
-use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\StreamInterface;
-use Simtabi\Laranail\Pdf\Exceptions\PdfException;
+use PHPUnit\Framework\Attributes\Test;
+use Illuminate\Support\Facades\Storage;
 use Simtabi\Laranail\Pdf\Tests\TestCase;
+use Simtabi\Laranail\Pdf\Exceptions\PdfException;
 use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -19,21 +19,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 final class PdfDocumentTest extends TestCase
 {
     private int $renders = 0;
-
-    private function document(string $body = '%PDF-1.4 fake'): PdfDocument
-    {
-        $this->renders = 0;
-
-        return new PdfDocument(
-            resolver: function () use ($body): StreamInterface {
-                $this->renders++;
-
-                return Utils::streamFor($body);
-            },
-            filename: 'invoice.pdf',
-            driver: 'test',
-        );
-    }
 
     // -----------------------------------------------------------------
     // Laziness
@@ -244,5 +229,20 @@ final class PdfDocumentTest extends TestCase
         $response = $this->document()->inline();
 
         self::assertSame('test', $response->headers->get('X-Pdf-Driver'));
+    }
+
+    private function document(string $body = '%PDF-1.4 fake'): PdfDocument
+    {
+        $this->renders = 0;
+
+        return new PdfDocument(
+            resolver: function () use ($body): StreamInterface {
+                $this->renders++;
+
+                return Utils::streamFor($body);
+            },
+            filename: 'invoice.pdf',
+            driver: 'test',
+        );
     }
 }

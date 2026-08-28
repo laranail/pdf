@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Drivers;
 
+use Throwable;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use RuntimeException;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
-use RuntimeException;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
 use Simtabi\Laranail\Pdf\Exceptions\RenderFailed;
 use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
 use Simtabi\Laranail\Pdf\ValueObjects\RenderOptions;
-use Throwable;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
 
 /**
  * Dompdf — HTML only, in-process, no external service.
@@ -41,6 +41,22 @@ use Throwable;
  */
 final class DompdfDriver extends Driver implements RendersHtml
 {
+    /**
+     * The config keys this driver will act on.
+     *
+     * An explicit list rather than `'set'.ucfirst($key)`, for the same reason
+     * the driver registry is not an `Illuminate\Support\Manager`: a config
+     * string must never become a method name. `method_exists()` would narrow
+     * that to "any setter on `Options`", which is still a config file choosing
+     * which code runs, and still grows silently as the vendor class grows.
+     */
+    private const array SETTABLE = [
+        'isRemoteEnabled', 'isHtml5ParserEnabled', 'isFontSubsettingEnabled',
+        'isJavascriptEnabled', 'defaultFont', 'defaultPaperSize',
+        'defaultPaperOrientation', 'dpi', 'fontHeightRatio', 'chroot',
+        'fontDir', 'fontCache', 'tempDir', 'logOutputFile',
+    ];
+
     /**
      * @param array<string, mixed> $options passed to Dompdf\Options
      */
@@ -102,22 +118,6 @@ final class DompdfDriver extends Driver implements RendersHtml
             throw RenderFailed::from($this->name(), 'html', $e);
         }
     }
-
-    /**
-     * The config keys this driver will act on.
-     *
-     * An explicit list rather than `'set'.ucfirst($key)`, for the same reason
-     * the driver registry is not an `Illuminate\Support\Manager`: a config
-     * string must never become a method name. `method_exists()` would narrow
-     * that to "any setter on `Options`", which is still a config file choosing
-     * which code runs, and still grows silently as the vendor class grows.
-     */
-    private const array SETTABLE = [
-        'isRemoteEnabled', 'isHtml5ParserEnabled', 'isFontSubsettingEnabled',
-        'isJavascriptEnabled', 'defaultFont', 'defaultPaperSize',
-        'defaultPaperOrientation', 'dpi', 'fontHeightRatio', 'chroot',
-        'fontDir', 'fontCache', 'tempDir', 'logOutputFile',
-    ];
 
     private function buildOptions(): Options
     {

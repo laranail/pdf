@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Pdf;
 
 use Closure;
+use Simtabi\Laranail\Pdf\Enums\Capability;
 use Illuminate\Contracts\Container\Container;
 use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
-use Simtabi\Laranail\Pdf\Enums\Capability;
 use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
 use Simtabi\Laranail\Pdf\ValueObjects\RenderOptions;
 

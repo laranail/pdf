@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use Override;
 use Simtabi\Laranail\Pdf\Facades\Pdf;
+use Orchestra\Testbench\TestCase as Orchestra;
 use Simtabi\Laranail\Pdf\Providers\PdfServiceProvider;
 
 abstract class TestCase extends Orchestra

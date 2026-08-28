@@ -28,8 +28,8 @@ final class UnsupportedCapability extends PdfException
 
         $e = new self($message, 6002);
         $e->context = [
-            'driver' => $driver,
-            'capability' => $capability->value,
+            'driver'       => $driver,
+            'capability'   => $capability->value,
             'alternatives' => $alternatives,
         ];
 

@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Tests\Unit;
 
+use Throwable;
+use RuntimeException;
 use Gotenberg\Gotenberg;
-use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Client\ClientInterface;
+use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use RuntimeException;
+use Simtabi\Laranail\Pdf\Tests\TestCase;
 use Simtabi\Laranail\Pdf\Drivers\DompdfDriver;
 use Simtabi\Laranail\Pdf\Drivers\GotenbergDriver;
-use Simtabi\Laranail\Pdf\Exceptions\DriverUnavailable;
-use Simtabi\Laranail\Pdf\Exceptions\InvalidSource;
 use Simtabi\Laranail\Pdf\Exceptions\PdfException;
 use Simtabi\Laranail\Pdf\Exceptions\RenderFailed;
-use Simtabi\Laranail\Pdf\Tests\TestCase;
+use Simtabi\Laranail\Pdf\Exceptions\InvalidSource;
 use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
-use Throwable;
+use Simtabi\Laranail\Pdf\Exceptions\DriverUnavailable;
 
 /**
  * The promise that makes the optional dependencies genuinely optional.
@@ -29,30 +29,6 @@ use Throwable;
  */
 final class ExceptionContainmentTest extends TestCase
 {
-    private function failingClient(Throwable $failure): ClientInterface
-    {
-        return new readonly class($failure) implements ClientInterface
-        {
-            public function __construct(private Throwable $failure) {}
-
-            public function sendRequest(RequestInterface $request): ResponseInterface
-            {
-                throw $this->failure;
-            }
-        };
-    }
-
-    // -----------------------------------------------------------------
-    // Render failures
-    // -----------------------------------------------------------------
-
-    private function skipWithoutGotenberg(): void
-    {
-        if (! class_exists(Gotenberg::class)) {
-            self::markTestSkipped('gotenberg/gotenberg-php is not installed; the transport cannot be reached.');
-        }
-    }
-
     #[Test]
     public function a_transport_failure_surfaces_as_a_pdf_exception(): void
     {
@@ -106,10 +82,10 @@ final class ExceptionContainmentTest extends TestCase
 
         try {
             foreach ([
-                'html' => fn (): PdfDocument => $driver->html('<p>x</p>'),
-                'url' => fn (): PdfDocument => $driver->url('https://example.com'),
+                'html'   => fn (): PdfDocument => $driver->html('<p>x</p>'),
+                'url'    => fn (): PdfDocument => $driver->url('https://example.com'),
                 'office' => fn (): PdfDocument => $driver->convert($file),
-                'merge' => fn (): PdfDocument => $driver->merge([$file]),
+                'merge'  => fn (): PdfDocument => $driver->merge([$file]),
             ] as $operation => $call) {
                 try {
                     $call()->contents();
@@ -227,6 +203,30 @@ final class ExceptionContainmentTest extends TestCase
             self::assertStringStartsWith('%PDF', $bytes);
         } catch (PdfException $e) {
             self::assertInstanceOf(PdfException::class, $e);
+        }
+    }
+
+    private function failingClient(Throwable $failure): ClientInterface
+    {
+        return new readonly class($failure) implements ClientInterface
+        {
+            public function __construct(private Throwable $failure) {}
+
+            public function sendRequest(RequestInterface $request): ResponseInterface
+            {
+                throw $this->failure;
+            }
+        };
+    }
+
+    // -----------------------------------------------------------------
+    // Render failures
+    // -----------------------------------------------------------------
+
+    private function skipWithoutGotenberg(): void
+    {
+        if (! class_exists(Gotenberg::class)) {
+            self::markTestSkipped('gotenberg/gotenberg-php is not installed; the transport cannot be reached.');
         }
     }
 }

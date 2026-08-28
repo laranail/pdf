@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Tests\Feature;
 
+use Simtabi\Laranail\Pdf\Facades\Pdf;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Support\Facades\Storage;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
 use Simtabi\Laranail\Pdf\DriverRegistry;
-use Simtabi\Laranail\Pdf\Exceptions\InvalidSource;
-use Simtabi\Laranail\Pdf\Facades\Pdf;
 use Simtabi\Laranail\Pdf\Tests\TestCase;
+use Simtabi\Laranail\Pdf\Exceptions\InvalidSource;
 
 /**
  * Against a real Gotenberg container.
@@ -40,14 +40,6 @@ final class GotenbergIntegrationTest extends TestCase
         }
     }
 
-    private function fixture(string $contents, string $extension): string
-    {
-        $path = sys_get_temp_dir() . '/laranail-gotenberg-' . bin2hex(random_bytes(6)) . '.' . $extension;
-        file_put_contents($path, $contents);
-
-        return $path;
-    }
-
     #[Test]
     public function it_renders_html(): void
     {
@@ -65,10 +57,10 @@ final class GotenbergIntegrationTest extends TestCase
         // rather than being silently rejected, which is the failure that
         // actually happens.
         $bytes = Pdf::html('<h1>Wide</h1>', [
-            'paperSize' => 'a3',
-            'orientation' => 'landscape',
+            'paperSize'       => 'a3',
+            'orientation'     => 'landscape',
             'printBackground' => true,
-            'marginTop' => 0.5,
+            'marginTop'       => 0.5,
         ])->contents();
 
         self::assertStringStartsWith('%PDF', $bytes);
@@ -135,5 +127,13 @@ final class GotenbergIntegrationTest extends TestCase
         $this->artisan('laranail::pdf.doctor', ['--driver' => 'gotenberg', '--probe' => true])
             ->expectsOutputToContain('ok (')
             ->assertExitCode(0);
+    }
+
+    private function fixture(string $contents, string $extension): string
+    {
+        $path = sys_get_temp_dir() . '/laranail-gotenberg-' . bin2hex(random_bytes(6)) . '.' . $extension;
+        file_put_contents($path, $contents);
+
+        return $path;
     }
 }

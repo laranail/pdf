@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Pdf\ValueObjects;
 
 use Closure;
-use Illuminate\Contracts\Support\Responsable;
-use Illuminate\Support\Facades\Storage;
-use Psr\Http\Message\StreamInterface;
 use RuntimeException;
-use Simtabi\Laranail\Pdf\Exceptions\RenderFailed;
+use Psr\Http\Message\StreamInterface;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Support\Responsable;
 use Symfony\Component\HttpFoundation\Response;
+use Simtabi\Laranail\Pdf\Exceptions\RenderFailed;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -215,9 +215,9 @@ final class PdfDocument implements Responsable
         $stream = $this->stream();
 
         $headers = [
-            'Content-Type' => 'application/pdf',
+            'Content-Type'        => 'application/pdf',
             'Content-Disposition' => sprintf('%s; filename="%s"', $disposition, addslashes($name)),
-            'X-Pdf-Driver' => $this->driver,
+            'X-Pdf-Driver'        => $this->driver,
         ];
 
         if (($size = $stream->getSize()) !== null) {
