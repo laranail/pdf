@@ -17,7 +17,7 @@ use Simtabi\Laranail\Pdf\ValueObjects\RenderOptions;
 interface MergesPdfs extends PdfDriver
 {
     /**
-     * @param list<string> $paths
+     * @param  list<string>  $paths
      */
     public function merge(array $paths, ?RenderOptions $options = null): PdfDocument;
 }

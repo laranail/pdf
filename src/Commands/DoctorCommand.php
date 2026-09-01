@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Commands;
 
-use Throwable;
-use Simtabi\Laranail\Pdf\DriverRegistry;
-use Simtabi\Laranail\Pdf\Support\UrlGuard;
-use Simtabi\Laranail\Pdf\Support\PdfConfig;
-use Simtabi\Laranail\Pdf\Support\DriverReport;
-use Simtabi\Laranail\Pdf\Exceptions\PdfException;
 use Simtabi\Laranail\Console\Tools\Commands\Command;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
 use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
+use Simtabi\Laranail\Pdf\DriverRegistry;
+use Simtabi\Laranail\Pdf\Exceptions\PdfException;
+use Simtabi\Laranail\Pdf\Support\DriverReport;
+use Simtabi\Laranail\Pdf\Support\PdfConfig;
+use Simtabi\Laranail\Pdf\Support\UrlGuard;
+use Throwable;
 
 /**
  * Answers what is actually wrong, not what the config file looks like.
@@ -52,7 +52,7 @@ final class DoctorCommand extends Command
         }
 
         if ($reports === []) {
-            $this->error('No matching driver. Registered: ' . implode(', ', $registry->names()) . '.');
+            $this->error('No matching driver. Registered: '.implode(', ', $registry->names()).'.');
 
             return self::FAILURE;
         }
@@ -124,7 +124,7 @@ final class DoctorCommand extends Command
     private function inspectSecurity(UrlGuard $guard, PdfConfig $config): array
     {
         return [
-            'allowed_hosts'           => $config->strings('security.allowed_hosts'),
+            'allowed_hosts' => $config->strings('security.allowed_hosts'),
             'block_private_addresses' => $config->bool('security.block_private_addresses', true),
             // Not a config read but an actual question put to the guard, so a
             // rule that stops covering this stops claiming to.
@@ -133,15 +133,15 @@ final class DoctorCommand extends Command
     }
 
     /**
-     * @param list<DriverReport> $reports
-     * @param array<string, mixed> $security
+     * @param  list<DriverReport>  $reports
+     * @param  array<string, mixed>  $security
      */
     private function render(string $default, array $reports, array $security): void
     {
         $this->table(
             ['Driver', 'Available', 'Capabilities', 'Probe', 'Why not'],
             array_map(static fn (DriverReport $r): array => [
-                $r->name . ($r->name === $default ? ' (default)' : ''),
+                $r->name.($r->name === $default ? ' (default)' : ''),
                 $r->available ? 'yes' : 'no',
                 $r->describeCapabilities(),
                 $r->describeProbe(),
@@ -155,20 +155,20 @@ final class DoctorCommand extends Command
         /** @var list<string> $hosts */
         $hosts = $security['allowed_hosts'];
 
-        $this->line('  allowed hosts:   ' . ($hosts === [] ? 'any' : implode(', ', $hosts)));
-        $this->line('  private blocked: ' . ($security['block_private_addresses'] === true ? 'yes' : 'NO'));
+        $this->line('  allowed hosts:   '.($hosts === [] ? 'any' : implode(', ', $hosts)));
+        $this->line('  private blocked: '.($security['block_private_addresses'] === true ? 'yes' : 'NO'));
 
         if ($security['metadata_endpoint_refused'] !== true) {
             $this->warn(
                 '  The cloud metadata endpoint (169.254.169.254) is reachable by the URL renderer. '
-                . 'If any caller can influence the URL, that is credential disclosure.',
+                .'If any caller can influence the URL, that is credential disclosure.',
             );
         }
 
         if ($hosts === []) {
             $this->line(
                 '  <comment>Note:</comment> the private-address check is lexical, so a hostname resolving to an '
-                . 'internal address still passes it. Fill in allowed_hosts if callers can influence the URL.',
+                .'internal address still passes it. Fill in allowed_hosts if callers can influence the URL.',
             );
         }
     }

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Drivers;
 
-use Throwable;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use RuntimeException;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
+use RuntimeException;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
 use Simtabi\Laranail\Pdf\Exceptions\RenderFailed;
 use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
 use Simtabi\Laranail\Pdf\ValueObjects\RenderOptions;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
+use Throwable;
 
 /**
  * Dompdf — HTML only, in-process, no external service.
@@ -58,7 +58,7 @@ final class DompdfDriver extends Driver implements RendersHtml
     ];
 
     /**
-     * @param array<string, mixed> $options passed to Dompdf\Options
+     * @param  array<string, mixed>  $options  passed to Dompdf\Options
      */
     public function __construct(
         private readonly array $options = [],

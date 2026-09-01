@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Pdf\ValueObjects;
 
 use Closure;
-use RuntimeException;
-use Psr\Http\Message\StreamInterface;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Support\Responsable;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Storage;
+use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 use Simtabi\Laranail\Pdf\Exceptions\RenderFailed;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -46,8 +46,8 @@ final class PdfDocument implements Responsable
     private ?StreamInterface $stream = null;
 
     /**
-     * @param Closure(): StreamInterface $resolver
-     * @param array<string, mixed> $meta
+     * @param  Closure(): StreamInterface  $resolver
+     * @param  array<string, mixed>  $meta
      */
     public function __construct(
         private readonly Closure $resolver,
@@ -105,7 +105,7 @@ final class PdfDocument implements Responsable
      * `store()` silently writing zero bytes. Call `contents()` once and write
      * that if you need the same bytes in several places.
      *
-     * @param array<string, mixed>|string $options
+     * @param  array<string, mixed>|string  $options
      */
     public function store(string $path, ?string $disk = null, array|string $options = []): string
     {
@@ -215,9 +215,9 @@ final class PdfDocument implements Responsable
         $stream = $this->stream();
 
         $headers = [
-            'Content-Type'        => 'application/pdf',
+            'Content-Type' => 'application/pdf',
             'Content-Disposition' => sprintf('%s; filename="%s"', $disposition, addslashes($name)),
-            'X-Pdf-Driver'        => $this->driver,
+            'X-Pdf-Driver' => $this->driver,
         ];
 
         if (($size = $stream->getSize()) !== null) {

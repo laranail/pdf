@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Tests\Unit;
 
-use PHPUnit\Framework\Attributes\Test;
-use Simtabi\Laranail\Pdf\Tests\TestCase;
-use Simtabi\Laranail\Pdf\Support\UrlGuard;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Simtabi\Laranail\Pdf\Exceptions\InvalidSource;
+use Simtabi\Laranail\Pdf\Support\UrlGuard;
+use Simtabi\Laranail\Pdf\Tests\TestCase;
 
 /**
  * "Render this URL" asks a machine inside the network to fetch a URL a caller
@@ -29,15 +29,15 @@ final class UrlGuardTest extends TestCase
     public static function privateAddresses(): array
     {
         return [
-            'loopback v4'        => ['http://127.0.0.1/'],
-            'loopback name'      => ['http://localhost:8080/'],
-            'loopback v6'        => ['http://[::1]/'],
-            'rfc1918 10/8'       => ['http://10.0.0.5/'],
-            'rfc1918 172.16/12'  => ['http://172.16.4.1/'],
+            'loopback v4' => ['http://127.0.0.1/'],
+            'loopback name' => ['http://localhost:8080/'],
+            'loopback v6' => ['http://[::1]/'],
+            'rfc1918 10/8' => ['http://10.0.0.5/'],
+            'rfc1918 172.16/12' => ['http://172.16.4.1/'],
             'rfc1918 192.168/16' => ['http://192.168.1.1/'],
-            'link-local'         => ['http://169.254.1.1/'],
-            'cgnat'              => ['http://100.64.0.1/'],
-            'zero'               => ['http://0.0.0.0/'],
+            'link-local' => ['http://169.254.1.1/'],
+            'cgnat' => ['http://100.64.0.1/'],
+            'zero' => ['http://0.0.0.0/'],
         ];
     }
 
@@ -49,10 +49,10 @@ final class UrlGuardTest extends TestCase
     public static function badSchemes(): array
     {
         return [
-            'file reads local disk'     => ['file:///etc/passwd'],
+            'file reads local disk' => ['file:///etc/passwd'],
             'gopher speaks to any port' => ['gopher://example.com:11211/'],
-            'ftp'                       => ['ftp://example.com/x.pdf'],
-            'data'                      => ['data:text/html,<h1>hi</h1>'],
+            'ftp' => ['ftp://example.com/x.pdf'],
+            'data' => ['data:text/html,<h1>hi</h1>'],
         ];
     }
 
@@ -229,8 +229,8 @@ final class UrlGuardTest extends TestCase
     public function config_drives_the_guard(): void
     {
         $guard = UrlGuard::fromConfig([
-            'allowed_schemes'         => ['https'],
-            'allowed_hosts'           => ['example.com'],
+            'allowed_schemes' => ['https'],
+            'allowed_hosts' => ['example.com'],
             'block_private_addresses' => true,
         ]);
 

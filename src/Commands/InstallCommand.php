@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Commands;
 
-use Simtabi\Laranail\Pdf\DriverRegistry;
 use Simtabi\Laranail\Console\Tools\Commands\Command;
 use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
+use Simtabi\Laranail\Pdf\DriverRegistry;
 
 /**
  * Publishes the config and says what is still needed.
@@ -29,7 +29,7 @@ final class InstallCommand extends Command
     public function handle(DriverRegistry $registry): int
     {
         $this->callSilently('vendor:publish', array_filter([
-            '--tag'   => 'pdf-config',
+            '--tag' => 'pdf-config',
             '--force' => (bool) $this->option('force'),
         ]));
 
@@ -46,7 +46,7 @@ final class InstallCommand extends Command
             }
 
             $missing[] = $name;
-            $this->line("  <comment>✗</comment> {$name} — " . $driver->unavailableReason());
+            $this->line("  <comment>✗</comment> {$name} — ".$driver->unavailableReason());
         }
 
         if ($missing === []) {
