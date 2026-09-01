@@ -67,7 +67,7 @@
     "require-dev": {
         "dompdf/dompdf": "^3.0",
         "gotenberg/gotenberg-php": "^2.7",
-        "guzzlehttp/guzzle": "^7.9",
+        "guzzlehttp/guzzle": "^8.1",
         "larastan/larastan": "^3.0",
         "laravel/pint": "^1.18",
         "mockery/mockery": "^1.6",
