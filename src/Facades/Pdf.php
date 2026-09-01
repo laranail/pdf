@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Pdf\Facades;
 
 use Closure;
-use Simtabi\Laranail\Pdf\PdfManager;
 use Illuminate\Support\Facades\Facade;
+use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
 use Simtabi\Laranail\Pdf\DriverRegistry;
 use Simtabi\Laranail\Pdf\Enums\Capability;
-use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
+use Simtabi\Laranail\Pdf\PdfManager;
 use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
 use Simtabi\Laranail\Pdf\ValueObjects\RenderOptions;
 

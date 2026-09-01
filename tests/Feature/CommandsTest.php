@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Tests\Feature;
 
-use Simtabi\Laranail\Pdf\PdfManager;
-use Simtabi\Laranail\Pdf\Facades\Pdf;
 use PHPUnit\Framework\Attributes\Test;
-use Simtabi\Laranail\Pdf\DriverRegistry;
-use Simtabi\Laranail\Pdf\Tests\TestCase;
-use Simtabi\Laranail\Pdf\Support\UrlGuard;
 use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
+use Simtabi\Laranail\Pdf\DriverRegistry;
+use Simtabi\Laranail\Pdf\Facades\Pdf;
+use Simtabi\Laranail\Pdf\PdfManager;
+use Simtabi\Laranail\Pdf\Support\UrlGuard;
+use Simtabi\Laranail\Pdf\Tests\TestCase;
 
 final class CommandsTest extends TestCase
 {
@@ -124,14 +124,14 @@ final class CommandsTest extends TestCase
             self::markTestSkipped('dompdf/dompdf is not installed.');
         }
 
-        $output = sys_get_temp_dir() . '/laranail-render-' . bin2hex(random_bytes(6)) . '.pdf';
-        $input = sys_get_temp_dir() . '/laranail-render-' . bin2hex(random_bytes(6)) . '.html';
+        $output = sys_get_temp_dir().'/laranail-render-'.bin2hex(random_bytes(6)).'.pdf';
+        $input = sys_get_temp_dir().'/laranail-render-'.bin2hex(random_bytes(6)).'.html';
         file_put_contents($input, '<h1>Report</h1>');
 
         try {
             $this->artisan('laranail::pdf.render', [
-                'source'   => $input,
-                'output'   => $output,
+                'source' => $input,
+                'output' => $output,
                 '--driver' => 'dompdf',
             ])->assertExitCode(0);
 
@@ -147,17 +147,17 @@ final class CommandsTest extends TestCase
     public function render_refuses_a_capability_the_driver_lacks(): void
     {
         $this->artisan('laranail::pdf.render', [
-            'source'   => '/tmp/a.pdf',
-            'output'   => '/tmp/out.pdf',
+            'source' => '/tmp/a.pdf',
+            'output' => '/tmp/out.pdf',
             '--driver' => 'dompdf',
-            '--merge'  => ['/tmp/b.pdf'],
+            '--merge' => ['/tmp/b.pdf'],
         ])->assertExitCode(1);
     }
 
     #[Test]
     public function render_refuses_a_url_the_guard_blocks(): void
     {
-        $output = sys_get_temp_dir() . '/laranail-render-' . bin2hex(random_bytes(6)) . '.pdf';
+        $output = sys_get_temp_dir().'/laranail-render-'.bin2hex(random_bytes(6)).'.pdf';
 
         $this->artisan('laranail::pdf.render', [
             'source' => 'http://169.254.169.254/latest/meta-data/',

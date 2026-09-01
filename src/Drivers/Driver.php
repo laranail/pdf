@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Drivers;
 
-use Simtabi\Laranail\Pdf\Enums\Capability;
 use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
+use Simtabi\Laranail\Pdf\Enums\Capability;
 use Simtabi\Laranail\Pdf\Exceptions\DriverUnavailable;
 
 /**

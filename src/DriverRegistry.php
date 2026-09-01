@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Pdf;
 
 use Closure;
-use Simtabi\Laranail\Pdf\Enums\Capability;
 use Illuminate\Contracts\Container\Container;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\ConvertsDocuments;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\MergesPdfs;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersUrl;
 use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
+use Simtabi\Laranail\Pdf\Enums\Capability;
 use Simtabi\Laranail\Pdf\Exceptions\DriverNotFound;
 use Simtabi\Laranail\Pdf\Exceptions\UnsupportedCapability;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\MergesPdfs;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersUrl;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\ConvertsDocuments;
 
 /**
  * Resolves a driver by name, and refuses to hand back one that cannot do the
@@ -51,7 +51,7 @@ final class DriverRegistry
     /**
      * Register a driver factory under a name.
      *
-     * @param Closure(Container): PdfDriver $factory
+     * @param  Closure(Container): PdfDriver  $factory
      */
     public function extend(string $name, Closure $factory): self
     {

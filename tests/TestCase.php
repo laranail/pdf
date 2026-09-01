@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Pdf\Tests;
 
 use Override;
+use Simtabi\Laranail\Package\Tools\Testing\IsolatedTestCase;
 use Simtabi\Laranail\Pdf\Facades\Pdf;
 use Simtabi\Laranail\Pdf\Providers\PdfServiceProvider;
-use Simtabi\Laranail\Package\Tools\Testing\IsolatedTestCase;
 
 abstract class TestCase extends IsolatedTestCase
 {

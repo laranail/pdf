@@ -43,8 +43,8 @@ use Simtabi\Laranail\Pdf\Exceptions\InvalidSource;
 final readonly class UrlGuard
 {
     /**
-     * @param list<string> $allowedSchemes
-     * @param list<string> $allowedHosts empty means "any host", subject to the checks below
+     * @param  list<string>  $allowedSchemes
+     * @param  list<string>  $allowedHosts  empty means "any host", subject to the checks below
      */
     public function __construct(
         private array $allowedSchemes = ['http', 'https'],
@@ -53,7 +53,7 @@ final readonly class UrlGuard
     ) {}
 
     /**
-     * @param array<string, mixed> $config the `laranail.pdf.security` block
+     * @param  array<string, mixed>  $config  the `laranail.pdf.security` block
      */
     public static function fromConfig(array $config): self
     {
