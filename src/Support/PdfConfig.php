@@ -92,6 +92,6 @@ final readonly class PdfConfig
 
     private function get(string $key): mixed
     {
-        return $this->config->get('laranail.pdf.'.$key);
+        return $this->config->get('laranail.pdf.' . $key);
     }
 }

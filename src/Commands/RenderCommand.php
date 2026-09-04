@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Commands;
 
-use Simtabi\Laranail\Console\Tools\Commands\Command;
-use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
-use Simtabi\Laranail\Pdf\Exceptions\PdfException;
 use Simtabi\Laranail\Pdf\PdfManager;
+use Simtabi\Laranail\Pdf\Exceptions\PdfException;
 use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
+use Simtabi\Laranail\Console\Tools\Commands\Command;
 use Simtabi\Laranail\Pdf\ValueObjects\RenderOptions;
+use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
 
 /**
  * Render one thing to one file, from the shell.
@@ -110,6 +110,6 @@ final class RenderCommand extends Command
 
         $bytes = filesize($path);
 
-        return $bytes === false ? 'unknown size' : number_format($bytes / 1024, 1).' KB';
+        return $bytes === false ? 'unknown size' : number_format($bytes / 1024, 1) . ' KB';
     }
 }

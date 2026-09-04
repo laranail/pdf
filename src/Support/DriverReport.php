@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Support;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Simtabi\Laranail\Pdf\Enums\Capability;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * What the doctor command found out about one driver.
@@ -20,7 +20,7 @@ use Simtabi\Laranail\Pdf\Enums\Capability;
 final readonly class DriverReport implements Arrayable
 {
     /**
-     * @param  list<Capability>  $capabilities
+     * @param list<Capability> $capabilities
      */
     public function __construct(
         public string $name,
@@ -75,9 +75,9 @@ final readonly class DriverReport implements Arrayable
     public function describeProbe(): string
     {
         return match ($this->probeOk) {
-            null => '—',
+            null  => '—',
             false => 'FAILED',
-            true => sprintf('ok (%d bytes, %dms)', $this->probeBytes, $this->probeMs),
+            true  => sprintf('ok (%d bytes, %dms)', $this->probeBytes, $this->probeMs),
         };
     }
 
@@ -85,16 +85,16 @@ final readonly class DriverReport implements Arrayable
     public function toArray(): array
     {
         $report = [
-            'available' => $this->available,
-            'reason' => $this->reason,
+            'available'    => $this->available,
+            'reason'       => $this->reason,
             'capabilities' => $this->capabilityValues(),
         ];
 
         if ($this->wasProbed()) {
             $report['probe'] = array_filter([
-                'ok' => $this->probeOk,
+                'ok'    => $this->probeOk,
                 'bytes' => $this->probeBytes,
-                'ms' => $this->probeMs,
+                'ms'    => $this->probeMs,
                 'error' => $this->probeError,
             ], static fn (mixed $value): bool => $value !== null);
         }

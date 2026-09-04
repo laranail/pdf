@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Tests\Unit;
 
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Test;
 use ReflectionClass;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\ConvertsDocuments;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\MergesPdfs;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersUrl;
-use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
+use PHPUnit\Framework\Attributes\Test;
 use Simtabi\Laranail\Pdf\DriverRegistry;
-use Simtabi\Laranail\Pdf\Drivers\DompdfDriver;
 use Simtabi\Laranail\Pdf\Drivers\Driver;
-use Simtabi\Laranail\Pdf\Drivers\GotenbergDriver;
-use Simtabi\Laranail\Pdf\Enums\Capability;
-use Simtabi\Laranail\Pdf\Exceptions\UnsupportedCapability;
 use Simtabi\Laranail\Pdf\Tests\TestCase;
+use Simtabi\Laranail\Pdf\Enums\Capability;
+use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Simtabi\Laranail\Pdf\Drivers\DompdfDriver;
+use Simtabi\Laranail\Pdf\Drivers\GotenbergDriver;
+use Simtabi\Laranail\Pdf\Exceptions\UnsupportedCapability;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\MergesPdfs;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersUrl;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\ConvertsDocuments;
 
 /**
  * The claim this package makes about itself: a driver cannot say it can do
@@ -43,7 +43,7 @@ final class DriverContractTest extends TestCase
     }
 
     /**
-     * @param  list<Capability>  $expected
+     * @param list<Capability> $expected
      */
     #[Test]
     #[DataProvider('drivers')]
@@ -53,7 +53,7 @@ final class DriverContractTest extends TestCase
     }
 
     /**
-     * @param  list<Capability>  $expected
+     * @param list<Capability> $expected
      */
     #[Test]
     #[DataProvider('drivers')]
