@@ -17,7 +17,7 @@ namespace Simtabi\Laranail\Pdf\ValueObjects;
 final readonly class RenderOptions
 {
     /**
-     * @param  array<string, mixed>  $extra  driver-specific settings, passed through untouched
+     * @param array<string, mixed> $extra driver-specific settings, passed through untouched
      */
     public function __construct(
         public ?string $filename = null,
@@ -34,7 +34,7 @@ final readonly class RenderOptions
     ) {}
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     public static function fromArray(array $options): self
     {
@@ -77,7 +77,7 @@ final readonly class RenderOptions
     }
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     private static function string(array $options, string $key): ?string
     {
@@ -87,7 +87,7 @@ final readonly class RenderOptions
     }
 
     /**
-     * @param  array<string, mixed>  $options
+     * @param array<string, mixed> $options
      */
     private static function float(array $options, string $key): ?float
     {

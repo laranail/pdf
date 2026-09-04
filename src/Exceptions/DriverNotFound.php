@@ -7,7 +7,7 @@ namespace Simtabi\Laranail\Pdf\Exceptions;
 final class DriverNotFound extends PdfException
 {
     /**
-     * @param  list<string>  $registered
+     * @param list<string> $registered
      */
     public static function named(string $name, array $registered): self
     {

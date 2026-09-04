@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Pdf\Tests\Unit;
 
 use GuzzleHttp\Psr7\Utils;
-use Illuminate\Support\Facades\Storage;
-use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\StreamInterface;
-use Simtabi\Laranail\Pdf\Exceptions\PdfException;
+use PHPUnit\Framework\Attributes\Test;
+use Illuminate\Support\Facades\Storage;
 use Simtabi\Laranail\Pdf\Tests\TestCase;
+use Simtabi\Laranail\Pdf\Exceptions\PdfException;
 use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -145,7 +145,7 @@ final class PdfDocumentTest extends TestCase
     #[Test]
     public function it_saves_to_a_local_path(): void
     {
-        $target = sys_get_temp_dir().'/laranail-pdf-'.bin2hex(random_bytes(6)).'.pdf';
+        $target = sys_get_temp_dir() . '/laranail-pdf-' . bin2hex(random_bytes(6)) . '.pdf';
 
         try {
             $this->document('%PDF-1.4 local')->saveTo($target);
