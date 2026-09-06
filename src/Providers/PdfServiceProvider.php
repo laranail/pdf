@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Providers;
 
-use GuzzleHttp\Client as GuzzleClient;
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Illuminate\Contracts\Container\Container;
-use Illuminate\Contracts\Foundation\Application;
 use Override;
 use Psr\Http\Client\ClientInterface;
-use Simtabi\Laranail\Package\Tools\Package;
-use Simtabi\Laranail\Package\Tools\Providers\PackageServiceProvider;
-use Simtabi\Laranail\Pdf\Commands\DoctorCommand;
-use Simtabi\Laranail\Pdf\Commands\InstallCommand;
-use Simtabi\Laranail\Pdf\Commands\RenderCommand;
-use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
-use Simtabi\Laranail\Pdf\DriverRegistry;
-use Simtabi\Laranail\Pdf\Drivers\DompdfDriver;
-use Simtabi\Laranail\Pdf\Drivers\GotenbergDriver;
 use Simtabi\Laranail\Pdf\PdfManager;
-use Simtabi\Laranail\Pdf\Support\PdfConfig;
+use GuzzleHttp\Client as GuzzleClient;
+use Simtabi\Laranail\Pdf\DriverRegistry;
 use Simtabi\Laranail\Pdf\Support\UrlGuard;
+use Simtabi\Laranail\Package\Tools\Package;
+use Simtabi\Laranail\Pdf\Support\PdfConfig;
+use Illuminate\Contracts\Container\Container;
+use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
+use Simtabi\Laranail\Pdf\Drivers\DompdfDriver;
+use Illuminate\Contracts\Foundation\Application;
+use Simtabi\Laranail\Pdf\Commands\DoctorCommand;
+use Simtabi\Laranail\Pdf\Commands\RenderCommand;
+use Simtabi\Laranail\Pdf\Commands\InstallCommand;
+use Simtabi\Laranail\Pdf\Drivers\GotenbergDriver;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
+use Simtabi\Laranail\Package\Tools\Providers\PackageServiceProvider;
 
 final class PdfServiceProvider extends PackageServiceProvider
 {
@@ -137,7 +137,7 @@ final class PdfServiceProvider extends PackageServiceProvider
 
         return new GuzzleClient([
             'timeout' => $config->float('drivers.gotenberg.timeout', 60.0),
-            'verify' => $this->verifyOption($config),
+            'verify'  => $this->verifyOption($config),
         ]);
     }
 

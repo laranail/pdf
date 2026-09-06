@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Pdf\Enums;
 
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\ConvertsDocuments;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\MergesPdfs;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
-use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersUrl;
 use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\MergesPdfs;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersUrl;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\RendersHtml;
+use Simtabi\Laranail\Pdf\Contracts\Capabilities\ConvertsDocuments;
 
 /**
  * The four things a PDF driver might be able to do.
@@ -43,10 +43,10 @@ enum Capability: string
     public function contract(): string
     {
         return match ($this) {
-            self::Html => RendersHtml::class,
-            self::Url => RendersUrl::class,
+            self::Html   => RendersHtml::class,
+            self::Url    => RendersUrl::class,
             self::Office => ConvertsDocuments::class,
-            self::Merge => MergesPdfs::class,
+            self::Merge  => MergesPdfs::class,
         };
     }
 
@@ -58,10 +58,10 @@ enum Capability: string
     public function label(): string
     {
         return match ($this) {
-            self::Html => 'HTML to PDF',
-            self::Url => 'URL to PDF',
+            self::Html   => 'HTML to PDF',
+            self::Url    => 'URL to PDF',
             self::Office => 'Office document to PDF',
-            self::Merge => 'Merge PDFs',
+            self::Merge  => 'Merge PDFs',
         };
     }
 }

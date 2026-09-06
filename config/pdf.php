@@ -43,7 +43,7 @@ return [
         ],
 
         'dompdf' => [
-            'paper' => env('LARANAIL_PDF_DOMPDF_PAPER', 'a4'),
+            'paper'       => env('LARANAIL_PDF_DOMPDF_PAPER', 'a4'),
             'orientation' => env('LARANAIL_PDF_DOMPDF_ORIENTATION', 'portrait'),
 
             /*
@@ -61,7 +61,7 @@ return [
             */
             'options' => [
                 'isRemoteEnabled' => env('LARANAIL_PDF_DOMPDF_REMOTE', false),
-                'defaultFont' => 'DejaVu Sans',
+                'defaultFont'     => 'DejaVu Sans',
             ],
         ],
 

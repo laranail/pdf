@@ -16,7 +16,7 @@ use Throwable;
 final class RenderFailed extends PdfException
 {
     /**
-     * @param  array<string, mixed>  $context
+     * @param array<string, mixed> $context
      */
     public static function from(string $driver, string $operation, Throwable $previous, array $context = []): self
     {

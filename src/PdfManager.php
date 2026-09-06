@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Pdf;
 
 use Closure;
+use Simtabi\Laranail\Pdf\Enums\Capability;
 use Illuminate\Contracts\Container\Container;
 use Simtabi\Laranail\Pdf\Contracts\PdfDriver;
-use Simtabi\Laranail\Pdf\Enums\Capability;
 use Simtabi\Laranail\Pdf\ValueObjects\PdfDocument;
 use Simtabi\Laranail\Pdf\ValueObjects\RenderOptions;
 
@@ -25,7 +25,7 @@ final readonly class PdfManager
     public function __construct(private DriverRegistry $registry) {}
 
     /**
-     * @param  array<string, mixed>|RenderOptions|null  $options
+     * @param array<string, mixed>|RenderOptions|null $options
      */
     public function html(string $html, array|RenderOptions|null $options = null, ?string $driver = null): PdfDocument
     {
@@ -33,7 +33,7 @@ final readonly class PdfManager
     }
 
     /**
-     * @param  array<string, mixed>|RenderOptions|null  $options
+     * @param array<string, mixed>|RenderOptions|null $options
      */
     public function url(string $url, array|RenderOptions|null $options = null, ?string $driver = null): PdfDocument
     {
@@ -41,7 +41,7 @@ final readonly class PdfManager
     }
 
     /**
-     * @param  array<string, mixed>|RenderOptions|null  $options
+     * @param array<string, mixed>|RenderOptions|null $options
      */
     public function convert(string $path, array|RenderOptions|null $options = null, ?string $driver = null): PdfDocument
     {
@@ -49,8 +49,8 @@ final readonly class PdfManager
     }
 
     /**
-     * @param  list<string>  $paths
-     * @param  array<string, mixed>|RenderOptions|null  $options
+     * @param list<string> $paths
+     * @param array<string, mixed>|RenderOptions|null $options
      */
     public function merge(array $paths, array|RenderOptions|null $options = null, ?string $driver = null): PdfDocument
     {
@@ -64,9 +64,9 @@ final readonly class PdfManager
      * alternative is `Pdf::html(view('invoice', $data)->render())` at every call
      * site.
      *
-     * @param  view-string  $view
-     * @param  array<string, mixed>  $data
-     * @param  array<string, mixed>|RenderOptions|null  $options
+     * @param view-string $view
+     * @param array<string, mixed> $data
+     * @param array<string, mixed>|RenderOptions|null $options
      */
     public function view(string $view, array $data = [], array|RenderOptions|null $options = null, ?string $driver = null): PdfDocument
     {
@@ -84,7 +84,7 @@ final readonly class PdfManager
     }
 
     /**
-     * @param  Closure(Container): PdfDriver  $factory
+     * @param Closure(Container): PdfDriver $factory
      */
     public function extend(string $name, Closure $factory): self
     {
@@ -107,7 +107,7 @@ final readonly class PdfManager
     }
 
     /**
-     * @param  array<string, mixed>|RenderOptions|null  $options
+     * @param array<string, mixed>|RenderOptions|null $options
      */
     private function options(array|RenderOptions|null $options): ?RenderOptions
     {

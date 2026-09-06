@@ -35,12 +35,12 @@ final class InvalidSource extends PdfException
     }
 
     /**
-     * @param  list<string>  $allowed
+     * @param list<string> $allowed
      */
     public static function disallowedScheme(string $url, string $scheme, array $allowed): self
     {
         $e = new self(
-            "The URL [{$url}] uses the [{$scheme}] scheme; only ".implode('/', $allowed).' is allowed.',
+            "The URL [{$url}] uses the [{$scheme}] scheme; only " . implode('/', $allowed) . ' is allowed.',
             6008,
         );
         $e->context = ['url' => $url, 'scheme' => $scheme, 'allowed' => $allowed];
@@ -52,7 +52,7 @@ final class InvalidSource extends PdfException
     {
         $e = new self(
             'A URL carrying a username or password will not be fetched: the credentials would be '
-            .'sent by the renderer, logged by it, and are almost never what the caller intended.',
+            . 'sent by the renderer, logged by it, and are almost never what the caller intended.',
             6009,
         );
         $e->context = ['url' => $url];
@@ -61,12 +61,12 @@ final class InvalidSource extends PdfException
     }
 
     /**
-     * @param  list<string>  $allowed
+     * @param list<string> $allowed
      */
     public static function hostNotAllowed(string $host, array $allowed): self
     {
         $e = new self(
-            "The host [{$host}] is not in laranail.pdf.security.allowed_hosts (".implode(', ', $allowed).').',
+            "The host [{$host}] is not in laranail.pdf.security.allowed_hosts (" . implode(', ', $allowed) . ').',
             6010,
         );
         $e->context = ['host' => $host, 'allowed' => $allowed];

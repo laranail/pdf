@@ -16,7 +16,7 @@ use Simtabi\Laranail\Pdf\Enums\Capability;
 final class UnsupportedCapability extends PdfException
 {
     /**
-     * @param  list<string>  $alternatives
+     * @param list<string> $alternatives
      */
     public static function for(string $driver, Capability $capability, array $alternatives = []): self
     {
@@ -24,12 +24,12 @@ final class UnsupportedCapability extends PdfException
 
         $message .= $alternatives === []
             ? ' No installed driver does.'
-            : ' Drivers that do: '.implode(', ', $alternatives).'.';
+            : ' Drivers that do: ' . implode(', ', $alternatives) . '.';
 
         $e = new self($message, 6002);
         $e->context = [
-            'driver' => $driver,
-            'capability' => $capability->value,
+            'driver'       => $driver,
+            'capability'   => $capability->value,
             'alternatives' => $alternatives,
         ];
 
