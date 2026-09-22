@@ -1,9 +1,10 @@
 # laranail/pdf
 
-[![Packagist](https://img.shields.io/packagist/v/laranail/pdf.svg?style=flat-square)](https://packagist.org/packages/laranail/pdf)
 [![Tests](https://img.shields.io/github/actions/workflow/status/laranail/pdf/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/laranail/pdf/actions/workflows/tests.yml)
 [![Static analysis](https://img.shields.io/github/actions/workflow/status/laranail/pdf/static-analysis.yml?branch=main&label=static%20analysis&style=flat-square)](https://github.com/laranail/pdf/actions/workflows/static-analysis.yml)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+
+`laranail/pdf` is not published to Packagist, so there is no registry-version badge to show — see [Install](#install).
 
 > PDF rendering for Laravel behind a capability-checked driver seam, returning a lazy document that streams instead of a path on disk.
 
