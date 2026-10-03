@@ -28,7 +28,29 @@ php artisan laranail::pdf.install
 php artisan laranail::pdf.doctor
 ```
 
-## Quick start
+## Quick start guide and usage
+
+### Getting started
+
+1. The default driver is `gotenberg`. To render in-process with Dompdf instead, set it in `.env`:
+
+   ```env
+   LARANAIL_PDF_DRIVER=dompdf
+   ```
+
+2. For Gotenberg, run an instance and point the package at it:
+
+   ```bash
+   docker run --rm -p 3000:3000 gotenberg/gotenberg:8
+   ```
+
+   ```env
+   LARANAIL_PDF_GOTENBERG_URL=http://localhost:3000
+   ```
+
+3. Prove each available driver actually renders: `php artisan laranail::pdf.doctor --probe`.
+
+### Usage
 
 ```php
 use Simtabi\Laranail\Pdf\Facades\Pdf;
@@ -38,6 +60,12 @@ return Pdf::view('invoices.show', ['invoice' => $invoice]);
 
 // Or send it somewhere without it ever fully entering memory.
 Pdf::merge($statementPaths)->store("statements/{$year}.pdf", 's3');
+```
+
+Force a download, with a name:
+
+```php
+return Pdf::view('invoices.show', compact('invoice'))->download("invoice-{$invoice->id}.pdf");
 ```
 
 ## The two decisions worth knowing
