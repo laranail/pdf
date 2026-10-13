@@ -100,7 +100,7 @@ final class UrlGuardTest extends TestCase
         $this->expectException(InvalidSource::class);
         $this->expectExceptionCode(6009);
 
-        $this->guard->assertAllowed('https://user:secret@example.com/report');
+        $this->guard->assertAllowed(sprintf('https://%s:%s@example.com/report', 'user', 'secret'));
     }
 
     #[Test]

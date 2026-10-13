@@ -73,7 +73,7 @@ than a preference.
 | | Why |
 |---|---|
 | Anything but `http`/`https` | `file://` reads local disk; `gopher://` speaks to arbitrary TCP ports. |
-| A URL with userinfo (`https://user:pass@host/`) | The renderer would send the credentials and log the full URL. |
+| A URL with userinfo (`https://<user>:<password>@host/`) | The renderer would send the credentials and log the full URL. |
 | Loopback, RFC 1918, link-local, CGNAT and reserved addresses | `169.254.169.254` — the cloud metadata endpoint — returns IAM credentials on EC2, GCE and Azure. |
 
 ### `allowed_hosts` is the one that actually holds
