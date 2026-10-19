@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **A guard now keeps literal credentials out of the tests**, and every generated credential's
+  purpose a single word. `NoLiteralCredentialsTest` runs package-tools' `AssertsNoLiteralCredentials`
+  over `tests/`, so secret scanning has nothing to report. Requires
+  `laranail/package-tools ^0.1.10`.
 - `laranail::pdf.install` now extends laranail/package-tools' `InstallCommand` and takes
   laranail/console's display API and run lifecycle from its `InteractsWithConsoleServices` and
   `InteractsWithConsoleWriter` traits instead of its `Command` base. Name, option, description,
